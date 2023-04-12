@@ -23,14 +23,14 @@ Contribution Plan:
 
 Shanmugapriyan
 •	Need have to implement evaluator.
-•	Would make use of opensource tool for building the project.
+•	Would make use of opensource tool for compiler.
 •	Will work on the improvisation of the Grammar.
 •	Need to implement Map Data Structure.
 
 Poornima
 •	Need have to implement evaluator.
 •	Will contribute towards the implementation of Lexer.
-•	Would make use of opensource tool for building the project.
+•	Would make use of opensource tool for compiler.
 •	Should implement List Data Structure.
 
 Joseph
