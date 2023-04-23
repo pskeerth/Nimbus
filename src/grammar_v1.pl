@@ -24,7 +24,7 @@ commandblock --> ['if'], ['('], boolean,  [')'], general_block, ['else'], genera
 commandblock --> ['while'], ['('], boolean,  [')'], general_block.
 commandblock --> ['for'], ['('], ['int'] ,identifier ,['='] ,integer, [';'], boolean, [';'], unaryexpr, [')'], general_block.
 commandblock --> ['for'], identifier, ['in'], ['range'], ['('], integer, [','], integer, [')'], general_block.
-commandblock --> ['print'], ['('], identifier, [')'].
+commandblock --> ['print'], ['('], identifier, [')'], [';'].
 commandblock --> general_block.
 
 commandblock --> ['if'], ['('], boolean,  [')'], general_block , [';'], command.
