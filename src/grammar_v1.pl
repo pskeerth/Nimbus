@@ -1,6 +1,6 @@
 program --> block, ['.'].
 
-block --> ['main'], ['('], [')'], ['{'], decl_block.
+block --> ['main'], ['('], [')'], ['{'], decl_block, general_block, ['}'].
 decl_block --> decl, [';'].
 
 %Predicate to parse the block
@@ -23,6 +23,7 @@ commandblock --> ['if'], ['('], boolean,  [')'], general_block.
 commandblock --> ['if'], ['('], boolean,  [')'], general_block, ['else'], general_block.
 commandblock --> ['while'], ['('], boolean,  [')'], general_block.
 commandblock --> ['for'], ['('], ['int'] ,identifier ,['='] ,integer, [';'], boolean, [';'], unaryexpr, [')'], general_block.
+commandblock --> ['for'], identifier, ['in'], ['range'], ['('], integer, [','], integer, [')'], general_block.
 commandblock --> ['print'], ['('], identifier, [')'].
 commandblock --> general_block.
 
@@ -30,8 +31,8 @@ commandblock --> ['if'], ['('], boolean,  [')'], general_block , [';'], command.
 commandblock --> ['if'], ['('], boolean,  [')'], general_block, ['else'], general_block, [';'], command.
 commandblock --> ['while'], ['('], boolean,  [')'], general_block, [';'], command.
 commandblock --> ['for'], ['('], ['int'], identifier, ['='], integer, [';'], boolean, [';'], unaryexpr, [')'], general_block, [';'], command.
-commandblock --> ['print'], ['('], identifier, [')'].
-commandblock --> general_block.
+commandblock --> ['for'], identifier, ['in'], ['range'], ['('], integer, [','], integer, [')'], general_block, [';'], command.
+commandblock --> general_block, [';'], command.
 
 commandblock --> identifier, [':='], expr. 
 
