@@ -15,7 +15,7 @@ decl -->  ['int'], identifier.
 decl -->  ['float'], identifier.
 
 %Commands
-command --> commandblock, [';'], command.
+command --> commandblock, command.
 command --> commandblock.
 
 %Command block(Loops, assignment, print commands)
@@ -27,14 +27,14 @@ commandblock --> ['for'], identifier, ['in'], ['range'], ['('], integer, [','], 
 commandblock --> ['print'], ['('], identifier, [')'], [';'].
 commandblock --> general_block.
 
-commandblock --> ['if'], ['('], boolean,  [')'], general_block , [';'], command.
-commandblock --> ['if'], ['('], boolean,  [')'], general_block, ['else'], general_block, [';'], command.
-commandblock --> ['while'], ['('], boolean,  [')'], general_block, [';'], command.
-commandblock --> ['for'], ['('], ['int'], identifier, ['='], integer, [';'], boolean, [';'], unaryexpr, [')'], general_block, [';'], command.
-commandblock --> ['for'], identifier, ['in'], ['range'], ['('], integer, [','], integer, [')'], general_block, [';'], command.
-commandblock --> general_block, [';'], command.
+commandblock --> ['if'], ['('], boolean,  [')'], general_block , command.
+commandblock --> ['if'], ['('], boolean,  [')'], general_block, ['else'], general_block, command.
+commandblock --> ['while'], ['('], boolean,  [')'], general_block, command.
+commandblock --> ['for'], ['('], ['int'], identifier, ['='], integer, [';'], boolean, [';'], unaryexpr, [')'], general_block, command.
+commandblock --> ['for'], identifier, ['in'], ['range'], ['('], integer, [','], integer, [')'], general_block, command.
+commandblock --> general_block, command.
 
-commandblock --> identifier, [':='], expr. 
+commandblock --> identifier, [':='], expr, [';'].
 
 %Increment decrement operators
 unaryexpr --> identifier, ['+'], ['+'].
@@ -95,4 +95,4 @@ integer --> number.
 float --> integer, ['.'], integer.
 float --> integer.
 
-number --> ['0'] | ['1'] | ['2'] | ['3'] | ['4'] | ['5'] | ['6'] | ['7'] | ['8'] | ['9'].
+number --> ['0'] | ['1'] | ['2'] | ['3'] | ['4'] | ['5'] | ['6'] | ['7'] | ['8'] | ['9'].
