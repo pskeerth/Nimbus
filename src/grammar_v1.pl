@@ -3,10 +3,10 @@ program --> block, ['.'].
 block --> ['main'], ['('], [')'], ['{'], decl_block, general_block, ['}'].
 decl_block --> decl, [';'].
 
-%Predicate to parse the block
+% Predicate to parse the block.
 general_block --> ['{'], command, ['}'].
 
-%Declarations(initialization)
+% Declarations (initialization).
 decl -->  ['int'] ,identifier ,[':='] ,integer, [';'], decl.
 decl -->  ['float'] ,identifier ,[':='] ,float, [';'], decl.
 decl -->  ['string'] ,identifier ,[':='] ,string, [';'], decl.
@@ -14,35 +14,32 @@ decl -->  ['boolean'] ,identifier ,[':='] ,boolean, [';'], decl.
 decl -->  ['int'], identifier.
 decl -->  ['float'], identifier.
 
-%Commands
+% Commands.
 command --> commandblock, command.
 command --> commandblock.
 
-%Command block(Loops, assignment, print commands)
-commandblock --> ['if'], ['('], boolean,  [')'], general_block.
-commandblock --> ['if'], ['('], boolean,  [')'], general_block, ['else'], general_block.
-commandblock --> ['while'], ['('], boolean,  [')'], general_block.
-commandblock --> ['for'], ['('], ['int'] ,identifier ,['='] ,integer, [';'], boolean, [';'], unaryexpr, [')'], general_block.
-commandblock --> ['for'], identifier, ['in'], ['range'], ['('], integer, [','], integer, [')'], general_block.
-commandblock --> ['print'], ['('], identifier, [')'], [';'].
-commandblock --> general_block.
+% Command block (loops, assignment, print commands).
+if_statement --> ['if'], ['('], boolean,  [')'], general_block.
+if_else_statement --> ['if'], ['('], boolean,  [')'], general_block, ['else'], general_block.
+while_statement --> ['while'], ['('], boolean,  [')'], general_block.
+for_loop -- > ['for'], ['('], ['int'] ,identifier ,['='] ,integer, [';'], boolean, [';'], unaryexpr, [')'], general_block.
+for_inrange_loop --> ['for'], identifier, ['in'], ['range'], ['('], integer, [','], integer, [')'], general_block.
+print_statement --> ['print'], ['('], identifier, [')'], [';'].
+declare_inblock --> identifier, [':='], expr, [';'].
 
-commandblock --> ['if'], ['('], boolean,  [')'], general_block , command.
-commandblock --> ['if'], ['('], boolean,  [')'], general_block, ['else'], general_block, command.
-commandblock --> ['while'], ['('], boolean,  [')'], general_block, command.
-commandblock --> ['for'], ['('], ['int'], identifier, ['='], integer, [';'], boolean, [';'], unaryexpr, [')'], general_block, command.
-commandblock --> ['for'], identifier, ['in'], ['range'], ['('], integer, [','], integer, [')'], general_block, command.
-commandblock --> general_block, command.
+commandblock --> if_statement | if_else_statement | while_statement | for_loop |
+                 for_inrange_loop | print_statement | declare_inblock | general_block.
+commandblock --> if_statement, command | if_else_statement, command | while_statement, command |
+                 for_loop, command | for_inrange_loop, command | print_statement, command |
+                 declare_inblock, command | general_block, command.
 
-commandblock --> identifier, [':='], expr, [';'].
-
-%Increment decrement operators
+% Increment decrement operators.
 unaryexpr --> identifier, ['+'], ['+'].
 unaryexpr --> identifier, ['-'], ['-'].
 
-ternaryexpr --> ['('], boolean, [')'], ['?'], expr, [':'], expr. 
+ternaryexpr --> ['('], boolean, [')'], ['?'], expr, [':'], expr.
 
-%Expression for arithmetic computations
+% Expression for arithmetic computations.
 expr --> factor.
 expr --> miniexpr.
 expr --> miniexpr, ['+'], expr.
@@ -51,37 +48,35 @@ expr --> miniexpr, ['-'], expr.
 expr --> factor, ['-'], miniexpr.
 expr --> ternaryexpr.
 
-%To incorporate precedence rules
+% To incorporate precedence rules.
 miniexpr --> factor.
 miniexpr --> factor, ['*'], miniexpr.
 miniexpr --> factor, ['/'], miniexpr.
 
-% Lowest factor in th expressions
+% Lowest factor in th expressions.
 factor --> identifier.
 factor --> number.
 
-%Boolean expressions
+% Boolean expressions.
 boolean --> ['true'] | ['false'] | ['not'], boolean.
 boolean --> expr, ['='], expr , ['and'], boolean | expr, ['='], expr, ['or'], boolean.
 boolean --> expr, ['='], expr.
 
-% identifier variables
-identifier --> lowercase_letters, identifier.
-identifier --> lowercase_letters, uppercase_letters, identifier.
-identifier --> lowercase_letters, ['_'], identifier.
-identifier --> lowercase_letters.
+% identifier variables.
+identifier --> lowercase_letters, identifier_tail.
+identifier_tail --> uppercase_letters, identifier_tail | ['_'], identifier_tail | ''.
 
-% String part
-lowercase_letters --> ['a'] | ['b'] | ['c'] | ['d'] | ['e'] | ['f'] | 
-    ['g'] | ['h'] | ['i'] | ['j'] | ['k'] | ['l'] | ['m'] | ['n'] | ['o'] | 
-    ['p'] | ['q'] | ['r'] | ['s'] | ['t'] | ['u'] | ['v'] | ['w'] | ['x'] | 
+% String part.
+lowercase_letters --> ['a'] | ['b'] | ['c'] | ['d'] | ['e'] | ['f'] |
+    ['g'] | ['h'] | ['i'] | ['j'] | ['k'] | ['l'] | ['m'] | ['n'] | ['o'] |
+    ['p'] | ['q'] | ['r'] | ['s'] | ['t'] | ['u'] | ['v'] | ['w'] | ['x'] |
     ['x'] | ['y'] | ['z'].
-uppercase_letters --> ['A'] | ['B'] | ['C'] | ['D'] | ['E'] | ['F'] | 
-    ['G'] | ['H'] | ['I'] | ['J'] | ['K'] | ['L'] | ['M'] | ['N'] | ['O'] | 
-    ['P'] | ['Q'] | ['R'] | ['S'] | ['T'] | ['U'] | ['V'] | ['W'] | ['X'] | 
+uppercase_letters --> ['A'] | ['B'] | ['C'] | ['D'] | ['E'] | ['F'] |
+    ['G'] | ['H'] | ['I'] | ['J'] | ['K'] | ['L'] | ['M'] | ['N'] | ['O'] |
+    ['P'] | ['Q'] | ['R'] | ['S'] | ['T'] | ['U'] | ['V'] | ['W'] | ['X'] |
     ['X'] | ['Y'] | ['Z'].
 
-% string part
+% String part.
 string --> lowercase_letters, string.
 string --> uppercase_letters, string.
 string --> number, string.
@@ -89,7 +84,7 @@ string --> lowercase_letters.
 string --> uppercase_letters.
 string --> number.
 
-% Numbers part
+% Numbers part.
 integer --> number, integer.
 integer --> number.
 float --> integer, ['.'], integer.
