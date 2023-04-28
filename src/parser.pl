@@ -1,14 +1,14 @@
 program(t_program(P)) --> block(P), [.].
 
-block(t_block(declblock,genblock)) --> ['main'], ['('], [')'], ['{'], decl_block(declblock), general_block(genblock), ['}'].
-decl_block(t_declblock(declblock)) --> decl(declblock), [';'].
+block(t_block(decl_block,gen_block)) --> ['main'], ['('], [')'], ['{'], decl_block(decl_block), general_block(gen_block), ['}'].
+decl_block(t_declblock(decl_block)) --> decl(decl_block), [';'].
 
-general_block(t_genblock(genblock)) --> ['{'], command(genblock), ['}'].
+general_block(t_genblock(gen_block)) --> ['{'], command(gen_block), ['}'].
 
-decl(t_decl(identifier, integerval, declblock)) -->  ['int'] ,identifier(identifier) ,[':='] ,integer(integer), [';'], decl(declblock).
-decl(t_decl(identifier, float_val, declblock) -->  ['float'] ,identifier(identifier) ,[':='] ,float(float), [';'], decl(declblock).
-decl(t_decl(identifier, string_val, declblock) -->  ['string'] ,identifier(identifier) ,[':='] ,string(string_val), [';'], decl(declblock).
-decl(t_decl(identifier, boolean_val, declblock) -->  ['boolean'] ,identifier(identifier) ,[':='] ,boolean(boolean_val), [';'], decl(declblock).
+decl(t_decl(identifier, integer_val, decl_block)) -->  ['int'] ,identifier(identifier) ,[':='] ,integer(integer), [';'], decl(decl_block).
+decl(t_decl(identifier, float_val, decl_block) -->  ['float'] ,identifier(identifier) ,[':='] ,float(float), [';'], decl(decl_block).
+decl(t_decl(identifier, string_val, decl_block) -->  ['string'] ,identifier(identifier) ,[':='] ,string(string_val), [';'], decl(decl_block).
+decl(t_decl(identifier, boolean_val, decl_block) -->  ['boolean'] ,identifier(identifier) ,[':='] ,boolean(boolean_val), [';'], decl(decl_block).
 decl(t_decl(identifier) -->  ['int'], identifier(identifier).
 decl(t_decl(identifier) -->  ['float'], identifier(identifier).
 
@@ -79,7 +79,7 @@ identifier(t_identifier_lowercase(lowercase)) --> lowercase_letters(lowercase).
 % Strings
 string(t_string_lc(lowercase, string_val)) --> lowercase_letters(lowercase), string(string_val).
 string(t_string_uc(uppercase, Rest)) --> uppercase_letters(uppercase), string(string_val).
-string(t_string_num(num, Rest)) --> number(Num), string(string_val).
+string(t_string_num(num, Rest)) --> number(num), string(string_val).
 string(t_string_lc(lowercase)) --> lowercase_letters(lowercase).
 string(t_string_uc(uppercase)) --> uppercase_letters(uppercase).
 string(t_string_num(num)) --> number(num).
