@@ -63,7 +63,7 @@ factor --> number.
 boolean --> ['true'] | ['false'] | ['not'], boolean.
 boolean --> expr, ['='], expr , ['and'], boolean | expr, ['='], expr, ['or'], boolean.
 boolean --> expr, ['='], expr |  expr, ['>'], expr | expr ['<'], expr |
-            expr, ['>='], expr | expr, ['=<'], expr |  expr, ['!='], expr.
+            expr, ['>='], expr | expr, ['<='], expr |  expr, ['!='], expr.
 
 % identifier variables.
 identifier --> lowercase_letters, identifier_tail.
