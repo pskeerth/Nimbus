@@ -1,4 +1,4 @@
-program --> block, ['.'].
+program --> block.
 block --> ['main'], ['('], [')'], ['{'], decl_block, command, ['}'].
 
 decl_block --> decl, decl_block.

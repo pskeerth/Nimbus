@@ -30,6 +30,7 @@ public class Lexer {
         for (Token token : tokens.getTokens()) {
             System.out.print("hi");
             System.out.println(token);
+            if(token.getText().equals("<EOF>")) break;
             writer.write(token.getText() + "\n");
         }
         writer.close();

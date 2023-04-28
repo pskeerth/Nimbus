@@ -1,7 +1,7 @@
+:- module(program, [program/3]).
 :- table identifier/3.
-:- use_rendering(svgtree).
 
-program(t_program(P)) --> block(P), [.].
+program(t_program(P)) --> block(P).
 block(t_block(Decl_block, Cmd_block)) --> ['main'], ['('], [')'], ['{'], decl_block(Decl_block), command(Cmd_block), ['}'].
 
 decl_block(Decl_block) --> decl(Decl_block).
@@ -82,8 +82,8 @@ string(t_string(String)) --> string_val(String).
 integer(t_integer(Num)) --> integer_val(Num).
 float(t_float(Float)) --> float_val(Float).
 
-integer_val(V, [V | T], T) :- atom_number(V, V1), integer(V1).
-float_val(V, [V | T], T) :- atom_number(V, V1), float(V1).
+integer_val(V, [V | T], T) :- integer(V).
+float_val(V, [V | T], T) :- float(V).
 string_val(V, [V | T], T) :- string(V).
 
 % String part.
