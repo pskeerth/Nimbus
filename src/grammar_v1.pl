@@ -1,18 +1,20 @@
 program --> block, ['.'].
+block --> ['main'], ['('], [')'], ['{'], decl_block, command, ['}'].
 
-block --> ['main'], ['('], [')'], ['{'], decl_block, general_block, ['}'].
-decl_block --> decl, [';'].
+decl_block --> decl, decl_block.
+decl_block --> decl.
 
 % Predicate to parse the block.
 general_block --> ['{'], command, ['}'].
 
 % Declarations (initialization).
-decl -->  ['int'] ,identifier ,[':='] ,integer, [';'], decl.
-decl -->  ['float'] ,identifier ,[':='] ,float, [';'], decl.
-decl -->  ['string'] ,identifier ,[':='] ,string, [';'], decl.
-decl -->  ['boolean'] ,identifier ,[':='] ,boolean, [';'], decl.
-decl -->  ['int'], identifier.
-decl -->  ['float'], identifier.
+decl -->  ['int'] ,identifier(Identifier) ,[':='] ,integer(Integer_val), [';'].
+decl -->  ['float'] ,identifier(Identifier) ,[':='] ,float(Float_val), [';'].
+decl -->  ['string'] ,identifier(Identifier) ,[':='] ,string(String_val), [';'].
+decl -->  ['boolean'] ,identifier(Identifier) ,[':='] ,boolean(Boolean_val), [';'].
+
+decl -->  ['int'], identifier(Identifier), [';'].
+decl -->  ['float'], identifier(Identifier), [';'].
 
 % Commands.
 command --> commandblock, command.
@@ -60,11 +62,14 @@ factor --> number.
 % Boolean expressions.
 boolean --> ['true'] | ['false'] | ['not'], boolean.
 boolean --> expr, ['='], expr , ['and'], boolean | expr, ['='], expr, ['or'], boolean.
-boolean --> expr, ['='], expr.
+boolean --> expr, ['='], expr |  expr, ['>'], expr | expr ['<'], expr |
+            expr, ['>='], expr | expr, ['=<'], expr |  expr, ['!='], expr.
 
 % identifier variables.
 identifier --> lowercase_letters, identifier_tail.
-identifier_tail --> uppercase_letters, identifier_tail | ['_'], identifier_tail | ''.
+identifier_tail --> uppercase_letters, identifier_tail.
+identifier_tail --> ['_'], identifier_tail.
+identifier_tail --> [].
 
 % String part.
 lowercase_letters --> ['a'] | ['b'] | ['c'] | ['d'] | ['e'] | ['f'] |
