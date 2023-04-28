@@ -23,15 +23,15 @@ if_statement --> ['if'], ['('], boolean,  [')'], general_block.
 if_else_statement --> ['if'], ['('], boolean,  [')'], general_block, ['else'], general_block.
 while_statement --> ['while'], ['('], boolean,  [')'], general_block.
 for_loop -- > ['for'], ['('], ['int'] ,identifier ,['='] ,integer, [';'], boolean, [';'], unaryexpr, [')'], general_block.
-for_inrange_loop --> ['for'], identifier, ['in'], ['range'], ['('], integer, [','], integer, [')'], general_block.
+for_in_range_loop --> ['for'], identifier, ['in'], ['range'], ['('], integer, [','], integer, [')'], general_block.
 print_statement --> ['print'], ['('], identifier, [')'], [';'].
-declare_inblock --> identifier, [':='], expr, [';'].
+declare_in_block --> identifier, [':='], expr, [';'].
 
 commandblock --> if_statement | if_else_statement | while_statement | for_loop |
-                 for_inrange_loop | print_statement | declare_inblock | general_block.
+                 for_in_range_loop | print_statement | declare_in_block | general_block.
 commandblock --> if_statement, command | if_else_statement, command | while_statement, command |
-                 for_loop, command | for_inrange_loop, command | print_statement, command |
-                 declare_inblock, command | general_block, command.
+                 for_loop, command | for_in_range_loop, command | print_statement, command |
+                 declare_in_block, command | general_block, command.
 
 % Increment decrement operators.
 unaryexpr --> identifier, ['+'], ['+'].
@@ -88,6 +88,5 @@ string --> number.
 integer --> number, integer.
 integer --> number.
 float --> integer, ['.'], integer.
-float --> integer.
 
 number --> ['0'] | ['1'] | ['2'] | ['3'] | ['4'] | ['5'] | ['6'] | ['7'] | ['8'] | ['9'].
