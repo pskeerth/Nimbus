@@ -70,11 +70,12 @@ boolean(t_boolean(Expr1, Expr2)) --> expr(Expr1), ['='], expr(Expr2) |  expr(Exp
     								 expr(Expr1), ['=<'], expr(Expr2) |  expr(Expr1), ['!='], expr(Expr2).
 
 % identifier variables.
-%identifier(t_identifier(Lowercase_let)) --> lowercase_letters(Lowercase_let).
-identifier(t_identifier([Lowercase_let|Identifier_tail])) --> lowercase_letters(Lowercase_let), identifier_tail(Identifier_tail).
-identifier_tail(t_identifier_tail(Uppercase_let, Identifier_tail)) --> uppercase_letters(Uppercase_let), identifier_tail(Identifier_tail).
-identifier_tail(t_identifier_tail(Identifier_tail)) --> ['_'], identifier_tail(Identifier_tail).
-identifier_tail(_) --> [].
+identifier(t_identifier(Identifier)) --> identifier_val(Identifier).
+identifier_val(Identifier, [Identifier | Tail], Tail) :- atom(Identifier), not(integer(Identifier)),
+                                                         not(float(Identifier)), check_keyword(Identifier).
+check_keyword(Identifier) :- not(member(Identifier, [int, float, string, boolean, true, false,
+    						 if, else, for, while, in, range, or, and, not,  :=, '!=', =,
+                             <, >, <=, >=, ++, --, +, -, *, /])).
 
 % Strings
 string(t_string(String)) --> string_val(String).
@@ -85,16 +86,6 @@ float(t_float(Float)) --> float_val(Float).
 integer_val(V, [V | T], T) :- integer(V).
 float_val(V, [V | T], T) :- float(V).
 string_val(V, [V | T], T) :- string(V).
-
-% String part.
-lowercase_letters(t_lc) --> ['a'] | ['b'] | ['c'] | ['d'] | ['e'] | ['f'] |
-    ['g'] | ['h'] | ['i'] | ['j'] | ['k'] | ['l'] | ['m'] | ['n'] | ['o'] |
-    ['p'] | ['q'] | ['r'] | ['s'] | ['t'] | ['u'] | ['v'] | ['w'] | ['x'] |
-    ['x'] | ['y'] | ['z'].
-uppercase_letters(t_uc) --> ['A'] | ['B'] | ['C'] | ['D'] | ['E'] | ['F'] |
-    ['G'] | ['H'] | ['I'] | ['J'] | ['K'] | ['L'] | ['M'] | ['N'] | ['O'] |
-    ['P'] | ['Q'] | ['R'] | ['S'] | ['T'] | ['U'] | ['V'] | ['W'] | ['X'] |
-    ['X'] | ['Y'] | ['Z'].
 
 % Nums
 number(t_number) --> ['0'] | ['1'] | ['2'] | ['3'] | ['4'] | ['5'] | ['6'] | ['7'] | ['8'] | ['9'].
