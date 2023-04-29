@@ -1,8 +1,9 @@
 main(){
     int a := 2;
     int b := 3;
-    if(a<b+1){
-        for(int i := 0; i =< j; i++){
+    int j;
+    if(a<b){
+        for(int i := 0; i <= j; i++){
             print(i);
         }
     }

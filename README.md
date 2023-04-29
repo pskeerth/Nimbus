@@ -10,9 +10,9 @@ Team Members
 
 Platform
 ---------
-MacOS
-Linux
-Windows
+1. MacOS
+2. Linux
+3. Windows
 
 Tools used:
 --------

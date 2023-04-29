@@ -1,10 +1,9 @@
 main(){
     int a := 5;
     int b := 5;
-    string s := "abc";
     if(a=b){
-        print(s);
-    } else{
-        b:=9;
+        print(a);
+    } else {
+        b:= 9;
     }
 }
