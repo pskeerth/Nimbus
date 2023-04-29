@@ -47,23 +47,27 @@ ternaryexpr(t_ternary_expr(Bool_expr, Expr1, Expr2)) --> ['('], boolean(Bool_exp
 % Expressions
 expr(t_expr(Factor)) --> factor(Factor).
 expr(t_expr(Mini_expr)) --> miniexpr(Mini_expr).
-expr(t_expr(Left_mini_expr, '+', Right_expr)) --> miniexpr(Left_mini_expr), ['+'], expr(Right_expr).
-expr(t_expr(Factor, '+', Mini_expr)) --> factor(Factor), ['+'], miniexpr(Mini_expr).
-expr(t_expr(Left_mini_expr, '-', Right_expr)) --> miniexpr(Left_mini_expr), ['-'], expr(Right_expr).
-expr(t_expr(Factor, '-', Mini_expr)) --> factor(Factor), ['-'], miniexpr(Mini_expr).
-expr(t_expr(Ternary_expr)) --> ternaryexpr(Ternary_expr).
+expr(t_add(Left_mini_expr, '+', Right_expr)) --> miniexpr(Left_mini_expr), ['+'], expr(Right_expr).
+expr(t_add(Factor, '+', Mini_expr)) --> factor(Factor), ['+'], miniexpr(Mini_expr).
+expr(t_minus(Left_mini_expr, '-', Right_expr)) --> miniexpr(Left_mini_expr), ['-'], expr(Right_expr).
+expr(t_minus(Factor, '-', Mini_expr)) --> factor(Factor), ['-'], miniexpr(Mini_expr).
+expr(Ternary_expr) --> ternaryexpr(Ternary_expr).
 
 % To incorporate precedence rules.
 miniexpr(t_miniexpr(Factor)) --> factor(Factor).
-miniexpr(t_miniexpr(Factor, '', Mini_expr)) --> factor(Factor), [''], miniexpr(Mini_expr).
-miniexpr(t_miniexpr(Factor, '/', Mini_expr)) --> factor(Factor), ['/'], miniexpr(Mini_expr).
+miniexpr(t_multi(Factor, '*', Mini_expr)) --> factor(Factor), ['*'], miniexpr(Mini_expr).
+miniexpr(t_divide(Factor, '/', Mini_expr)) --> factor(Factor), ['/'], miniexpr(Mini_expr).
 
 % Lowest factor in th expressions.
+factor(t_bracket(X)) --> ['('], expr(X), [')'].
 factor(t_factor(Identifier)) --> identifier(Identifier).
-factor(t_factor(Num)) --> number(Num).
+factor(t_num(Num)) --> number(Num).
 
 % Boolean expressions.
-boolean(t_boolean(Bool_expr)) --> ['true'] | ['false'] | ['not'], boolean(Bool_expr).
+boolean(t_boolean(true)) --> ['true'].
+boolean(t_boolean(false)) --> ['false'].
+boolean(t_boolean('not', Bool_expr)) --> ['not'], boolean(Bool_expr).
+
 boolean(t_boolean(Expr1, Expr2, bool_expr)) --> expr(Expr1), ['='], expr(Expr2) , ['and'], boolean(bool_expr) | expr(Expr1), ['='], expr(Expr2), ['or'], boolean(bool_expr).
 boolean(t_boolean(Expr1, Expr2)) --> expr(Expr1), ['='], expr(Expr2) |  expr(Expr1), ['>'], expr(Expr2) |
     								 expr(Expr1), ['<'], expr(Expr2) |  expr(Expr1), ['>='], expr(Expr2) |

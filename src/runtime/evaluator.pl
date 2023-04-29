@@ -27,7 +27,7 @@ while_statement_eval(t_while_statement(Bool_expr, Gen_block), Env, NewEnv) :- bo
 while_statement_eval(t_while_statement(Bool_expr, _), Env, NewEnv) :- boolean_eval(Bool_expr, Env, NewEnv, false).
 
 for_loop_eval(t_for_loop(Identifier, Integer_val, Bool_expr, Unary_expr, Gen_block), Env, NewEnv) :- update('int', Identifier, Integer_val, Env, Env1), boolean_eval(Bool_expr, Env1, Env2, true),
-    												unaryexpr_eval(Unary_expr, Env2, Env3), general_block(Gen_block, Env3, Env4), lookup(Identifier, NewVal),
+    												general_block(Gen_block, Env2, Env3), unaryexpr_eval(Unary_expr, Env3, Env4), lookup(Identifier, NewVal),
     												for_loop_eval(t_for_loop(Identifier, NewVal, Bool_expr, Unary_expr, Gen_block), Env4, NewEnv).
 
 for_in_range_loop_eval(t_for_in_range_loop(Identifier, Integer_val1, Integer_val2, Gen_block), Env, NewEnv) :- Integer_val1 =< Integer_val2, update('int', Identifier, Integer_val1, Env, Env1), general_block(Gen_block, Env1, Env2),
@@ -38,6 +38,42 @@ print_statement_eval(t_print_statement(Identifier), Env, Env) :- lookup(Identifi
 
 declare_in_block_eval(t_decl_in_block(Identifier, Expr), Env, NewEnv) :- update(Identifier, Expr, Env, NewEnv).
 
+commandblock(t_command_block(Statement), Env, NewEnv) :- if_statement_eval(Statement, Env, NewEnv);if_else_statement_eval(Statement, Env, NewEnv);
+    													 while_statement_eval(Statement, Env, NewEnv);for_loop_eval(Statement, Env, NewEnv);
+                 										 for_in_range_loop_eval(Statement, Env, NewEnv);print_statement_eval(Statement, Env, NewEnv);
+    													 declare_in_block_eval(Statement, Env, NewEnv);generalblock_eval(Statement, Env, NewEnv).
+
+commandblock(t_command_block(Statement, Cmd), Env, NewEnv) :- if_statement_eval(Statement, Env, Env1), command_eval(Cmd, Env1, NewEnv);
+    														  if_else_statement_eval(Statement, Env, Env1), command_eval(Cmd, Env1, NewEnv);
+    													 	  while_statement_eval(Statement, Env, Env1), command_eval(Cmd, Env1, NewEnv);
+    														  for_loop_eval(Statement, Env, Env1), command_eval(Cmd, Env1, NewEnv);
+                 										 	  for_in_range_loop_eval(Statement, Env, Env1), command_eval(Cmd, Env1, NewEnv);
+    														  print_statement_eval(Statement, Env, Env1), command_eval(Cmd, Env1, NewEnv);
+    														  declare_in_block_eval(Statement, Env, Env1), command_eval(Cmd, Env1, NewEnv);
+    														  generalblock_eval(Statement, Env, Env1), command_eval(Cmd, Env1, NewEnv).
+
+%Increment decrement operators
+unaryexpr_eval(t_unary_expr(Identifier, '+', '+'), Env, NewEnv) :- lookup(Identifier, Val), NewVal is Val+1, update(Identifier, NewVal, Env, NewEnv).
+unaryexpr_eval(t_unary_expr(Identifier, '-', '-'), Env, NewEnv) :- lookup(Identifier, Val), NewVal is Val-1, update(Identifier, NewVal, Env, NewEnv).
+
+ternaryexpr(t_ternary_expr(Bool_expr, Expr1, _), Env, NewEnv) :- boolean_eval(Bool_expr, Env, Env2, true), expr_eval(Expr1, Env2, NewEnv).
+ternaryexpr(t_ternary_expr(Bool_expr, _, Expr2), Env, NewEnv) :- boolean_eval(Bool_expr, Env, Env2, false), expr_eval(Expr2, Env2, NewEnv).
+
+%Evaluator for boolean expressions
+boolean_eval(t_boolean(true), _, _, true).
+boolean_eval(t_boolean(false), _, _, false).
+boolean_eval(t_boolean(not, X), Env, NewEnv, false) :- boolean_eval(X, Env, NewEnv, true).
+boolean_eval(t_boolean(not, X), Env, NewEnv, true) :- boolean_eval(X, Env, NewEnv, false).
+
+%Evaluator for expressions
+expr_eval(t_add(Left_mini_expr, Right_expr), Env, NewEnv, V) :- expr_eval(Left_mini_expr, Env, Env1, V1), expr_eval(Right_expr, Env1, NewEnv, V2), V is V1+V2.
+expr_eval(t_minus(Left_mini_expr, Right_expr), Env, NewEnv, V) :- expr_eval(Left_mini_expr, Env, Env1, V1), expr_eval(Right_expr,Env1, NewEnv, V2), V is V1-V2.
+expr_eval(t_multi(X, Y), Env, NewEnv, V) :- expr_eval(X, Env, Env1, V1), expr_eval(Y, Env1, NewEnv, V2), V is V1*V2.
+expr_eval(t_divide(X, Y), Env, NewEnv, V) :- expr_eval(X, Env, Env1, V1), expr_eval(Y, Env1, NewEnv, V2), Y\=0, V is V1/V2.
+expr_eval(t_bracket(X), Env, NewEnv, V) :- expr_eval(X, Env, NewEnv, V).
+expr_eval(t_assign(X, :=, Y), Env, NewEnv, V) :- expr_eval(Y, Env, Env1, V), update(X, V, Env1, NewEnv).
+expr_eval(X, Env, Env, V) :- lookup(X, Env, V).
+expr_eval(t_num(X), Env, Env, X).
 
 %Declaring the identifiers with values
 update_data(int, ID, Value, [], [(int, ID, Value)]) :- integer(Value).
