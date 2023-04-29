@@ -33,10 +33,10 @@ print_statement(t_print_statement(Identifier)) --> ['print'], ['('], identifier(
 declare_in_block(t_decl_in_block(Identifier, Expr)) --> identifier(Identifier), [':='], expr(Expr), [';'].
 
 commandblock(t_command_block(Statement)) --> if_statement(Statement) | if_else_statement(Statement) | while_statement(Statement) | for_loop(Statement) |
-                 for_in_range_loop(Statement) | print_statement(Statement) | declare_in_block(Statement) | general_block(Statement).
+                 for_in_range_loop(Statement) | print_statement(Statement) | declare_in_block(Statement) | general_block(Statement) | ternaryexpr(Statement).
 commandblock(t_command_block(Statement, Cmd)) --> if_statement(Statement), command(Cmd) | if_else_statement(Statement), command(Cmd) | while_statement(Statement), command(Cmd) |
                  for_loop(Statement), command(Cmd) | for_in_range_loop(Statement), command(Cmd) | print_statement(Statement), command(Cmd) |
-                 declare_in_block(Statement), command(Cmd) | general_block(Statement), command(Cmd).
+                 declare_in_block(Statement), command(Cmd) | general_block(Statement), command(Cmd) | ternaryexpr(Statement), command(Cmd).
 
 %Increment decrement operators
 unaryexpr(t_unary_expr(Identifier, '+', '+')) --> identifier(Identifier), ['+'], ['+'].
