@@ -1,6 +1,10 @@
 main(){
     int a := 2;
+    int b := 6;
     if(a=2){
         print(a);
+        if(b<8){
+            print(b);
+        }
     }
 }

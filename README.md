@@ -6,3 +6,32 @@ Team Members
 2. Shanmugapriyan Ravichanthiran
 3. Prasant Ganesan
 4. Joseph Thomas
+
+
+Platform
+
+MacOS
+Linux
+Windows
+
+Tools
+ANTLR (Another Tool for Language Recognition) 
+
+Install Instructions
+
+git clone 
+
+Run Instructions
+
+
+
+Example
+
+
+Highlights
+
+
+Future Scope
+
+We are planning to add:
+

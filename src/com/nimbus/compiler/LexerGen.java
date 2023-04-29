@@ -14,7 +14,7 @@ public class LexerGen {
         String filename = "";
         filename = args.length > 0 ? args[0] : null;
         if (filename.equals(null)){
-            System.out.println("input filename can't be empty");
+            System.out.println("Please enter an input file name");
             return;
         }
 
