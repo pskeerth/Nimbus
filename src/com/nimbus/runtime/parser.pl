@@ -104,7 +104,7 @@ identifier_val(Identifier, [Identifier | Tail], Tail) :-
 check_keyword(Identifier) :-
     not(member(Identifier, [int, float, string, boolean, true, false,
     if, else, for, while, in, range, or, and, not,  :=, '!=', =,
-    <, >, <=, >=, ++, --, +, -, *, /])).
+    <, >, <=, >=, ++, --, +, -, *, /, '('])).
 
 % Strings
 string(String) --> string_val(String).

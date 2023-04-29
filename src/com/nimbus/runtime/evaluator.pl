@@ -1,3 +1,5 @@
+:- module(program_eval, [program_eval/2]).
+
 program_eval(t_program(K), NewEnv) :- block_eval(K, [], NewEnv).
 block_eval(t_block(D, C), Env, NewEnv) :-
     declblock_eval(D, Env, Env1), command_eval(C, Env1, NewEnv).

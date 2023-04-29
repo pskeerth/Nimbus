@@ -1,4 +1,5 @@
-package compiler;
+package com.nimbus.compiler;
+
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -7,7 +8,7 @@ import org.antlr.v4.runtime.Token;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Lexer {
+public class LexerGen {
     public static void main(String[] args) throws IOException {
 
         String filename = "";
@@ -28,8 +29,6 @@ public class Lexer {
         tokens.fill();
         FileWriter writer = new FileWriter(filename+"tokens");
         for (Token token : tokens.getTokens()) {
-            System.out.print("hi");
-            System.out.println(token);
             if(token.getText().equals("<EOF>")) break;
             writer.write(token.getText() + "\n");
         }
