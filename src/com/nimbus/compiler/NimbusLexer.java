@@ -1,6 +1,5 @@
 // Generated from NimbusLexer.g4 by ANTLR 4.12.0
-package compiler;
-import org.antlr.v4.runtime.Lexer;
+package com.nimbus.compiler;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.ATN;
 import org.antlr.v4.runtime.atn.ATNDeserializer;

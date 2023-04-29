@@ -1,4 +1,5 @@
 :- use_module(parser).
+:- use_module(evaluator).
 
 read_file(FileName, ConvertedData) :-
     open(FileName, read, Stream),
@@ -17,9 +18,13 @@ convert([C|Cs], [I|T]) :- atom_number(C, I), convert(Cs, T).
 convert([H|Hs], [H|T]) :- atom(H), convert(Hs, T).
 convert([], []).
 
-main(Filename) :- nl,
+main(Filename, E) :- nl,
     read_file(Filename, FileData),
     write(FileData), nl,
     program(ParseTree, FileData, []),
     write("Generating Parse Tree: "), nl,
-    write(ParseTree), nl.
+    write(ParseTree), nl,
+    write("Solution:"), nl,
+    program_eval(ParseTree, E), nl,
+    write("Environment state:"), nl,
+    write(E), nl.

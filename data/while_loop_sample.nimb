@@ -1,0 +1,13 @@
+main(){
+    int a := 1;
+    int k := 5;
+    int i := 0;
+    if(a!=7){
+        while(k>=4){
+            print(k);
+            k := 2;
+        }
+    } else {
+        i := 1;
+    }
+}
