@@ -110,6 +110,7 @@ ternaryexpr_eval(t_ternary_expr(B_exp, _, Expr2), Env, NewEnv, V) :-
 %Evaluator for boolean expressions
 boolean_eval(t_boolean(true), _, _, true).
 boolean_eval(t_boolean(false), _, _, false).
+
 boolean_eval(t_boolean(not, X), Env, NewEnv, false) :- boolean_eval(X, Env, NewEnv, true).
 boolean_eval(t_boolean(not, X), Env, NewEnv, true) :- boolean_eval(X, Env, NewEnv, false).
 
@@ -137,6 +138,20 @@ boolean_eval(t_boolean(Expr1, '>=', Expr2), Env, NewEnv, true) :-
     expr_eval(Expr1, Env, Env2, V1), expr_eval(Expr2, Env2, NewEnv, V2), V1 >= V2.
 boolean_eval(t_boolean(Expr1, '>=', Expr2), Env, NewEnv, false) :-
     expr_eval(Expr1, Env, Env2, V1), expr_eval(Expr2, Env2, NewEnv, V2), V1 < V2.
+
+boolean_eval(t_boolean(Bool_expr1, 'and', Bool_expr2), Env, NewEnv, V) :- boolean_eval(Bool_expr1, Env, Env1, V1), boolean_eval(Bool_expr2, Env1, NewEnv, V2), boolean_check(V1, 'and', V2, V).
+boolean_eval(t_boolean(Bool_expr1, 'or', Bool_expr2), Env, NewEnv, V) :- boolean_eval(Bool_expr1, Env, Env1, V1), boolean_eval(Bool_expr2, Env1, NewEnv, V2), boolean_check(V1, 'or', V2, V).
+
+boolean_check(true, 'and', true, true).
+boolean_check(true, 'and', false, false).
+boolean_check(false, 'and', true, false).
+boolean_check(false, 'and', false, false).
+
+boolean_check(true, 'or', true, true).
+boolean_check(true, 'or', false, true).
+boolean_check(false, 'or', true, true).
+boolean_check(false, 'or', false, false).
+
 
 %Evaluator for expressions
 expr_eval(t_add(Left_mini_expr, Right_expr), Env, NewEnv, V) :-
