@@ -68,10 +68,12 @@ boolean(t_boolean(true)) --> ['true'].
 boolean(t_boolean(false)) --> ['false'].
 boolean(t_boolean('not', Bool_expr)) --> ['not'], boolean(Bool_expr).
 
-boolean(t_boolean(Expr1, Expr2, bool_expr)) --> expr(Expr1), ['='], expr(Expr2) , ['and'], boolean(bool_expr) | expr(Expr1), ['='], expr(Expr2), ['or'], boolean(bool_expr).
-boolean(t_boolean(Expr1, Expr2)) --> expr(Expr1), ['='], expr(Expr2) |  expr(Expr1), ['>'], expr(Expr2) |
-    								 expr(Expr1), ['<'], expr(Expr2) |  expr(Expr1), ['>='], expr(Expr2) |
-    								 expr(Expr1), ['=<'], expr(Expr2) |  expr(Expr1), ['!='], expr(Expr2).
+boolean(t_boolean(Expr1, '=', Expr2)) --> expr(Expr1), ['='], expr(Expr2).
+boolean(t_boolean(Expr1, '!=', Expr2)) --> expr(Expr1), ['!='], expr(Expr2).
+boolean(t_boolean(Expr1, '<', Expr2)) --> expr(Expr1), ['<'], expr(Expr2).
+boolean(t_boolean(Expr1, '>', Expr2)) --> expr(Expr1), ['>'], expr(Expr2).
+boolean(t_boolean(Expr1, '<=', Expr2)) --> expr(Expr1), ['<='], expr(Expr2).
+boolean(t_boolean(Expr1, '>=', Expr2)) --> expr(Expr1), ['>='], expr(Expr2).
 
 % identifier variables.
 identifier(t_identifier(Identifier)) --> identifier_val(Identifier).
