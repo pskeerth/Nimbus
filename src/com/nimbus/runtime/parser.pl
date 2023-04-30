@@ -15,7 +15,7 @@ decl(t_decl('int', Identifier, Integer_val)) -->
 decl(t_decl('float', Identifier, Float_val)) -->
     ['float'] ,identifier(Identifier) ,[':='] ,float(Float_val), [';'].
 decl(t_decl('string', Identifier, String_val)) -->
-    ['string'] ,identifier(Identifier) ,[':='] ,string(String_val), [';'].
+    ['string'] ,identifier(Identifier) ,[':='] ,string_check(String_val), [';'].
 decl(t_decl('boolean', Identifier, Boolean_val)) -->
     ['boolean'] ,identifier(Identifier) ,[':='] ,boolean(Boolean_val), [';'].
 
@@ -48,15 +48,12 @@ declare_in_block(t_decl_in_block(Identifier, Expr)) -->
 
 commandblock(t_command_block(Statement)) --> if_statement(Statement) | if_else_statement(Statement) | while_statement(Statement) | for_loop(Statement) |
                  for_in_range_loop(Statement) | print_statement(Statement) | declare_in_block(Statement) | general_block(Statement).
-commandblock(t_command_block(Statement, Cmd)) --> if_statement(Statement), command(Cmd) | if_else_statement(Statement), command(Cmd) | while_statement(Statement), command(Cmd) |
-                 for_loop(Statement), command(Cmd) | for_in_range_loop(Statement), command(Cmd) | print_statement(Statement), command(Cmd) |
-                 declare_in_block(Statement), command(Cmd) | general_block(Statement), command(Cmd).
 
 %Increment decrement operators
 unaryexpr(t_unary_expr(Identifier, '++')) --> identifier(Identifier), ['++'].
 unaryexpr(t_unary_expr(Identifier, '--')) --> identifier(Identifier), ['--'].
 
-ternaryexpr(t_ternary_expr(Bool_expr, Expr1, Expr2)) --> ['('], boolean(Bool_expr), [')'], ['?'], expr(Expr1), [':'], expr(Expr2).
+ternaryexpr(t_ternary_expr(Bool_expr, Expr1, Expr2)) --> ['('], boolean(Bool_expr), [')'], ['?'], expr(Expr1), ['%'], expr(Expr2).
 
 % Expressions
 expr(Factor) --> factor(Factor).
@@ -107,11 +104,11 @@ check_keyword(Identifier) :-
     <, >, <=, >=, ++, --, +, -, *, /, '('])).
 
 % Strings
-string(String) --> string_val(String).
+string_check(String) --> string_val(String).
 % Numbers
 integer(Num) --> integer_val(Num).
 float(Float) --> float_val(Float).
 
 integer_val(V, [V | T], T) :- integer(V).
 float_val(V, [V | T], T) :- float(V).
-string_val(V, [V | T], T) :- string(V).
+string_val(V, [V | T], T) :- atom_string(V, V1), string(V1).

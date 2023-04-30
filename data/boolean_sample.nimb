@@ -1,8 +1,10 @@
 main(){
 int a := 3;
 int b :=2;
+string s := "hello";
 if((a>b) or (a=b)){
-print(a);}
+print(a);
+print(s);}
 else{
 b :=9; }
 }

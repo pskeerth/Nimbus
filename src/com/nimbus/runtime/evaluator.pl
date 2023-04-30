@@ -13,7 +13,7 @@ generalblock_eval(Cmd_block, Env, NewEnv) :-
 
 decl_eval(t_decl('int', ID, Val), Env, NewEnv) :- update('int', ID, Val, Env, NewEnv).
 decl_eval(t_decl('float', ID, Val), Env, NewEnv) :- update('float', ID, Val, Env, NewEnv).
-decl_eval(t_decl('string', ID, Val), Env, NewEnv) :- update('string', ID, Val, Env, NewEnv).
+decl_eval(t_decl('string', ID, Val), Env, NewEnv) :- atom_string(Val, Val1), update('string', ID, Val1, Env, NewEnv).
 decl_eval(t_decl('boolean', ID, Val), Env, NewEnv) :- update('boolean', ID, Val, Env, NewEnv).
 decl_eval(t_decl('int', ID), Env, NewEnv) :- update('int', ID, 0, Env, NewEnv).
 decl_eval(t_decl('float', ID), Env, NewEnv) :-  update('float', ID, 0.0, Env, NewEnv).
@@ -87,15 +87,6 @@ commandblock_eval(t_command_block(S), Env, NewEnv) :-
 commandblock_eval(t_command_block(S), Env, NewEnv) :-
     generalblock_eval(S, Env, NewEnv).
 
-commandblock_eval(t_command_block(S, Cmd), Env, NewEnv) :-
-    if_statement_eval(S, Env, Env1), command_eval(Cmd, Env1, NewEnv);
-    if_else_statement_eval(S, Env, Env1), command_eval(Cmd, Env1, NewEnv);
-    while_statement_eval(S, Env, Env1), command_eval(Cmd, Env1, NewEnv);
-    for_loop_eval(S, Env, Env1), command_eval(Cmd, Env1, NewEnv);
-    for_in_range_loop_eval(S, Env, Env1), command_eval(Cmd, Env1, NewEnv);
-    print_statement_eval(S, Env, Env1), command_eval(Cmd, Env1, NewEnv);
-    declare_in_block_eval(S, Env, Env1), command_eval(Cmd, Env1, NewEnv);
-    generalblock_eval(S, Env, Env1), command_eval(Cmd, Env1, NewEnv).
 
 %Increment decrement operators
 unaryexpr_eval(t_unary_expr(ID, '++'), Env, NewEnv) :-

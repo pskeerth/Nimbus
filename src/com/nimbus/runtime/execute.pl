@@ -20,6 +20,7 @@ convert([], []).
 
 main(Filename, E) :- nl,
     read_file(Filename, FileData),
+    write("Tokens:"), nl,
     write(FileData), nl,
     program(ParseTree, FileData, []),
     write("Generating Parse Tree: "), nl,
