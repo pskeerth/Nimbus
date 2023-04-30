@@ -1,4 +1,4 @@
-Contribution: (Until Now)
+Contribution: (INCLUDED MILESTONE-2 contributions)
 
 Shanmugapriyan
 •	Defined and implemented the grammar rules.
