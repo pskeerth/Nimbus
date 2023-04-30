@@ -4,41 +4,38 @@ Shanmugapriyan
 •	Defined and implemented the grammar rules.
 •	Involved in the programming language design.
 •	Assessed the trade-offs between each paradigm.
+MILESTONE-2:
+•	Researched about using ANTLR to generate Lexer and integrated it with LexerGen.
+•	Created Lexer(LexerGen) to create tokens for our program file.
+•	Implemented Evaluator.
+•	Resolved major issues in Parser and Evaluator.
+•	Updated Grammar.
 
 Poornima
 •	Defined and implemented the grammar rules.
 •	Worked on the lexical analyzer for a programming language.
 •	Created the Git repository and collaborated with other developers.
+MILESTONE-2:
+•	Implemented Parser Grammar.
+•	Added sample programs.
+•	Created README.md.
+•	Improved Parser grammar.
  
 Joseph
 •	Designed to the creation and advancement of a significant programming language.
 •	Managed the Git repository.
 •	Created the Milestone 1 document
+MILESTONE-2:
+• Updated Grammar.
+•	Modified semantics.
+•	Added presentation.pdf.
 
 Prasant
 •	Worked on the lexical analyzer component for the programming language.
 •	Understood of the pros and cons of all the major programming paradigms.
+MILESTONE-2:
+•	Added lookup and update logic for semantics.
+•	Simplified Identifier rules in Parser Grammar.
+•	Video post processing.
+•	Improved Grammar.
 
-Contribution Plan:
-
-Shanmugapriyan
-•	Need have to implement evaluator.
-•	Would make use of opensource tool for compiler.
-•	Will work on the improvisation of the Grammar.
-•	Need to implement Map Data Structure.
-
-Poornima
-•	Need have to implement evaluator.
-•	Will contribute towards the implementation of Lexer.
-•	Would make use of opensource tool for compiler.
-•	Should implement List Data Structure.
-
-Joseph
-•	Should implement parser for the language.
-•	Will contribute towards the implementation of Lexer.
-•	Need to implement Map Data Structure.
-
-Prasant
-•	Should implement parser for the language.
-•	Will work on the improvisation of the Grammar.
-•	Should implement List Data Structure.
